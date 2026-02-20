@@ -1,0 +1,22 @@
+# --- Core ML & Data ---
+tensorflow==2.16.1      # Or torch/torchvision if using PyTorch
+numpy>=1.23.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+scikit-learn>=1.2.0
+
+# --- Experiment Tracking ---
+mlflow>=2.5.0
+
+# --- Data Versioning ---
+dvc>=3.0.0
+dvc-s3>=3.0.0          # Or dvc-gdrive, dvc-azure depending on your remote
+
+# --- Inference Service ---
+fastapi>=0.100.0
+uvicorn>=0.22.0
+python-multipart>=0.0.6 # Required for handling image file uploads in FastAPI
+
+# --- Testing ---
+pytest>=7.4.0
+httpx>=0.24.0           # For testing FastAPI endpoints
