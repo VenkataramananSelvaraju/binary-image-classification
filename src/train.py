@@ -20,4 +20,9 @@ with mlflow.start_run():
     mlflow.log_metric("final_accuracy", history.history['accuracy'][-1])
     
     # 4. Save model
+    model_dir = "models"
+    if not os.path.exists(model_dir):
+        os.makedirs(model_dir)
+        print(f"Created directory: {model_dir}")
+    model.save(os.path.join(model_dir, "model_v1.h5"))
     mlflow.keras.log_model(model, "cnn_model")

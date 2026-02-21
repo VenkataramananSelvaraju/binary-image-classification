@@ -20,3 +20,6 @@ python-multipart>=0.0.6 # Required for handling image file uploads in FastAPI
 # --- Testing ---
 pytest>=7.4.0
 httpx>=0.24.0           # For testing FastAPI endpoints
+
+# ---Dataset ---
+kaggle==2.0.0
