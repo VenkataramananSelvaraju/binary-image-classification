@@ -1,5 +1,6 @@
 import mlflow
 import mlflow.keras
+import os
 from data_loader import get_data_generators
 from src.model import create_model
 
