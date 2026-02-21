@@ -23,3 +23,6 @@ httpx>=0.24.0           # For testing FastAPI endpoints
 
 # ---Dataset ---
 kaggle==2.0.0
+
+# ---Imaging Library---
+pillow>=10.0.0
