@@ -216,7 +216,3 @@ data/raw/
 # Models
 models/*.h5
 models/*.pkl
-
-# DVC
-.dvc/
-.dvcignore
