@@ -16,6 +16,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run unit tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: pytest tests/
 
   build-and-push:
