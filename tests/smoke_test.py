@@ -1,8 +1,9 @@
 import requests
 import sys
+import os
 
 def run_smoke_test():
-    base_url = "http://localhost:30001"
+    base_url = os.environ['SERVICE_URL']
     
     # 1. Check Health
     print("Testing /health...")
