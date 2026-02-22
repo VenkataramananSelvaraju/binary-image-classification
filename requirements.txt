@@ -10,7 +10,8 @@ mlflow>=2.5.0
 
 # --- Data Versioning ---
 dvc>=3.0.0
-dvc-s3>=3.0.0          # Or dvc-gdrive, dvc-azure depending on your remote
+dvc-s3>=3.0.0
+git-lfs==1.6
 
 # --- Inference Service ---
 fastapi>=0.100.0

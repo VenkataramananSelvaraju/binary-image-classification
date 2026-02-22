@@ -212,7 +212,3 @@ mlflow.db
 
 # Data
 data/raw/
-
-# Models
-models/*.h5
-models/*.pkl
