@@ -4,7 +4,7 @@ import os
 
 def run_smoke_test():
     base_url = os.environ['SERVICE_URL']
-    
+    pass
     # 1. Check Health
     print("Testing /health...")
     health = requests.get(f"{base_url}/health")
