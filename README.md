@@ -73,3 +73,10 @@ Every git push triggers the following automated workflow:
 2. **Build Stage:** Builds the Docker image and pushes to Docker Hub.
 3. **Deploy Stage:** Updates the Kubernetes deployment.
 4. **Validation Stage:** Executes `smoke_test.py` to verify the live service.
+
+### Screen Recording: 
+https://drive.google.com/drive/folders/1ePZB6iINMV9hWFEe3bfXE6jq-gXmgx2S?usp=drive_link
+
+### Screenshots
+![Health Endpoint](screenshots/screenshot-1.png)
+![Predict Endpoint](screenshots/screenshot-2.png)
