@@ -1,12 +1,19 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Request
 import numpy as np
 import tensorflow as tf
 from PIL import Image
 import io
-import os
+import time
+import logging
+import csv
+from datetime import datetime
 
 MODEL_PATH = "models/model_v1.h5"
 model = tf.keras.models.load_model("models/model_v1.h5")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("api_monitor")
 
 app = FastAPI()
 
@@ -28,5 +35,27 @@ async def predict(file: UploadFile = File(...)):
     # Inference
     prediction = model.predict(img_array)
     label = "Dog" if prediction[0][0] > 0.5 else "Cat"
+
+    log_prediction(
+        input_data=file.filename, 
+        prediction=str(prediction)
+        label=label
+    )
     
     return {"label": label, "confidence": float(prediction[0][0])}
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    
+    # Log metrics (Request count & Latency)
+    logger.info(f"Path: {request.url.path} | Method: {request.method} | Latency: {process_time:.4f}s")
+    return response
+
+def log_prediction(input_data, prediction, label=None):
+    with open("logs/predictions.csv", "a", newline='') as f:
+        writer = csv.writer(f)
+        # Record the input, result, and optional truth for performance analysis
+        writer.writerow([datetime.now(), input_data, prediction, label])
