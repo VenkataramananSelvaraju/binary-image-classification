@@ -1,8 +1,17 @@
-# Pet Image Classifier
+# MLOps Assignment 2: Binary Image Classification
 
-This repository contains a full-stack MLOps pipeline for a pet image classification service. It covers the entire lifecycle from local training to containerized deployment, automated testing, and production monitoring.
+# Group No: 78
+**Group Member Names:**
+* VENKATARAMANAN S (2024AA05555) 100%
+* PRANAV DEWANGAN (2024AA05554) 100%
 
-## MLOps Lifecycle Overview
+## Repository URL: 
+https://github.com/VenkataramananSelvaraju/binary-image-classification
+
+## 1. Project Overview
+This project implements a full-stack MLOps pipeline for a Pet image classification service. It covers the entire lifecycle from local training to containerized deployment, automated testing, and production monitoring.
+
+### MLOps Lifecycle Overview
 
 | Stage | Requirement | Implementation |
 | :--- | :--- | :--- |
@@ -10,36 +19,37 @@ This repository contains a full-stack MLOps pipeline for a pet image classificat
 | **M2** | Containerization | `Dockerfile` for environment consistency. |
 | **M3** | CI/CD Pipeline | **GitHub Actions** automating testing, build, and deployment. |
 | **M4** | Orchestration | **Kubernetes (Minikube)** for local production-like scaling. |
-| **M5** | Monitoring/Logging | FastAPI Middleware for latency & `BackgroundTasks` for data tracking. |
+| **M5** | Monitoring/Logging | FastAPI Middleware for latency & `BackgroundTasks` for data tracking.
 
-
-
-## Prerequisites
+### Prerequisites
 - Docker
 - Minikube
 - Python 3.12+
 - DVC
 - Git-LFS
 
-## Getting Started
-
-### 1. Download & Extract Dataset
+## 2. Setup & Installation
+To reproduce this project locally:
+1. Clone the repository: `git clone <repo-url>`
+2. Create a Virtual Environment :
 ```bash
-python src/download_data.py
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Mac/Linux
+source venv/bin/activate
 ```
+3. Install dependencies: `pip install -r requirements.txt`
+4. Run Data Loader: `python src/download_data.py`
+5. Run Train Model: `python src/train.py`
 
-### 2. Train Model
-```bash
-python src/train.py
-```
-
-### 3. Environment Setup
+## 3. Environment Setup
 ```bash
 # Build the container
 docker build -t pet-classifier:latest .
 ```
 
-### 4. Running Local Deployment
+## 4. Running Local Deployment
 ```bash
 # Start Minikube cluster
 minikube start
@@ -49,9 +59,8 @@ eval $(minikube docker-env)
 kubectl apply -f k8s/
 ```
 
-### 5. Monitoring & Smoke Testing
+## 5. Monitoring & Smoke Testing
 We utilize custom FastAPI middleware to track latency and BackgroundTasks to log predictions.
-
 ```bash
 # Run post-deploy smoke test
 python tests/smoke_test.py
