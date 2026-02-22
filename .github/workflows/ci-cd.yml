@@ -58,11 +58,6 @@ jobs:
             --docker-username=${{ secrets.DOCKER_USERNAME }} \
             --docker-password=${{ secrets.DOCKER_PASSWORD }} \
 
-      - name: Load image into kind
-        run: |
-          # Load the image built in the previous job into the cluster
-          kind load docker-image ${{ secrets.DOCKER_USERNAME }}/pet-classifier:latest --name kind-cluster
-
       - name: Deploy to K8s
         run: |
           kubectl apply -f k8s/deployment.yaml
