@@ -60,8 +60,8 @@ jobs:
 
       - name: Deploy to K8s
         run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/deployment.yml
+          kubectl apply -f k8s/service.yml
           kubectl rollout status deployment/pet-classifier-deployment
 
       - name: Run Smoke Tests
