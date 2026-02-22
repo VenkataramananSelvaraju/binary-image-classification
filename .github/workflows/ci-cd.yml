@@ -45,6 +45,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Create kind cluster
+        uses: helm/kind-action@v1
       - name: Deploy to K8s
         run: |
           kubectl apply -f k8s/deployment.yml
