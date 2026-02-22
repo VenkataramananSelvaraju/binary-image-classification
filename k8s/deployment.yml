@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pet-classifier-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pet-classifier
+  template:
+    metadata:
+      labels:
+        app: pet-classifier
+    spec:
+      containers:
+      - name: pet-classifier
+        image: pet-classifier:v1
+        ports:
+        - containerPort: 8000

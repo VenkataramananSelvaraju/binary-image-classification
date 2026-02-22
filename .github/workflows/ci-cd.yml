@@ -1,4 +1,4 @@
-name: MLOps CI Pipeline
+name: MLOps CI/CD Pipeline
 
 on:
   push:
@@ -37,5 +37,19 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
-          docker build -t $DOCKER_USERNAME/pet-adoption-classifier:latest .
-          docker push $DOCKER_USERNAME/pet-adoption-classifier:latest
+          docker build -t $DOCKER_USERNAME/pet-classifier:latest .
+          docker push $DOCKER_USERNAME/pet-classifier:latest
+
+  deploy-and-smoke-test:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to K8s
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl rollout status deployment/pet-classifier-deployment
+      - name: Run Smoke Tests
+        run: |
+          python tests/smoke_test.py
