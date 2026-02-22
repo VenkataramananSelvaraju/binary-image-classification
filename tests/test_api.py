@@ -1,10 +1,10 @@
 from fastapi.testclient import TestClient
-from src.main import app
+from src.main import app, get_model
 import pytest
 
 client = TestClient(app)
 
-# @pytest.fixture(autouse=True)
+# @pytest.fixture(autouse=True) 
 # def mock_model(monkeypatch):
 #     from src.model import create_model
 #     mock = create_model()
@@ -16,6 +16,6 @@ def test_health_check():
     assert response.json() == {"status": "healthy"}
 
 def test_model_loading():
-    # Verify model exists and is loaded
-    from src.main import model
+    # Call the function that handles the logic
+    model = get_model() 
     assert model is not None
