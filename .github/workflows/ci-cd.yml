@@ -41,27 +41,30 @@ jobs:
           docker push $DOCKER_USERNAME/pet-classifier:latest
 
   deploy-and-smoke-test:
-    needs: build-and-push
+    needs: test-and-build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
       - name: Create kind cluster
-        uses: helm/kind-action@v1
-      - name: Configure Kubernetes Secret
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        uses: helm/kind-action@v1.9.0
+        with:
+          cluster_name: kind-cluster
+
+      - name: Load image into kind
         run: |
-          kubectl create secret docker-registry docker-hub-secret \
-            --docker-server=https://index.docker.io/v1/ \
-            --docker-username=$DOCKER_USERNAME \
-            --docker-password=$DOCKER_PASSWORD \
-            --dry-run=client -o yaml | kubectl apply -f -
+          # Load the image built in the previous job into the cluster
+          kind load docker-image ${{ secrets.DOCKER_USERNAME }}/pet-classifier:latest --name kind-cluster
+
       - name: Deploy to K8s
         run: |
-          kubectl apply -f k8s/deployment.yml
-          kubectl apply -f k8s/service.yml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          # Wait for rollout
           kubectl rollout status deployment/pet-classifier-deployment
+
       - name: Run Smoke Tests
         run: |
+          kubectl port-forward svc/pet-classifier-service 30001:80 &
+          sleep 10
           python tests/smoke_test.py
