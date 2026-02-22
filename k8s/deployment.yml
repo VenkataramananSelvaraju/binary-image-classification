@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
       - name: pet-classifier
-        image: pet-classifier:v1
+        image: ${{ secrets.DOCKER_USERNAME }}/pet-classifier:latest
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
