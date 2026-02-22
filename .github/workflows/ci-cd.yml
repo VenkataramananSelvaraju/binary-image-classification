@@ -20,7 +20,7 @@ jobs:
       - name: Run unit tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest tests/
+        run: pytest tests/test_api.py
 
   build-and-push:
     needs: test

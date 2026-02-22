@@ -9,7 +9,7 @@ import csv
 from datetime import datetime
 
 MODEL_PATH = "models/model_v1.h5"
-model = tf.keras.models.load_model("models/model_v1.h5")
+model = tf.keras.models.load_model(MODEL_PATH)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -20,9 +20,6 @@ app = FastAPI()
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
-
-def get_model():
-    return tf.keras.models.load_model(MODEL_PATH)
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
@@ -38,7 +35,7 @@ async def predict(file: UploadFile = File(...)):
 
     log_prediction(
         input_data=file.filename, 
-        prediction=str(prediction)
+        prediction=str(prediction),
         label=label
     )
     
