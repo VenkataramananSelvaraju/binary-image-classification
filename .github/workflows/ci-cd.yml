@@ -41,7 +41,7 @@ jobs:
           docker push $DOCKER_USERNAME/pet-classifier:latest
 
   deploy-and-smoke-test:
-    needs: test-and-build
+    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
