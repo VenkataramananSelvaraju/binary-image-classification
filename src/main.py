@@ -3,11 +3,20 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 import io
+import os
+
+MODEL_PATH = "models/model_v1.h5"
 
 app = FastAPI()
 
 # Load model globally to ensure it's initialized only once
-model = tf.keras.models.load_model("models/model_v1.h5")
+# Load real model only if it exists, otherwise create a mock/placeholder
+if os.path.exists(MODEL_PATH):
+    model = tf.keras.models.load_model(MODEL_PATH)
+else:
+    print("Warning: Real model not found, using dummy structure for testing.")
+    from src.model import create_model
+    model = create_model()
 
 @app.get("/health")
 def health_check():
