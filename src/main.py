@@ -6,6 +6,7 @@ import io
 import os
 
 MODEL_PATH = "models/model_v1.h5"
+model = tf.keras.models.load_model("models/model_v1.h5")
 
 app = FastAPI()
 
@@ -23,9 +24,6 @@ async def predict(file: UploadFile = File(...)):
     image = image.resize((224, 224))
     img_array = np.array(image) / 255.0
     img_array = np.expand_dims(img_array, axis=0)
-
-    # Load model
-    model = get_model()
     
     # Inference
     prediction = model.predict(img_array)

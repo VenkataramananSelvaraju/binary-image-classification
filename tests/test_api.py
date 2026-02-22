@@ -1,17 +1,8 @@
 from fastapi.testclient import TestClient
 from src.main import app, get_model
-from src.model import create_model
-import pytest
 
 # Create the client
 client = TestClient(app)
-
-@pytest.fixture(autouse=True)
-def override_model_dependency():
-    mock = create_model()
-    app.dependency_overrides[get_model] = lambda: mock
-    yield  
-    app.dependency_overrides.clear()
 
 def test_health_check():
     response = client.get("/health")
