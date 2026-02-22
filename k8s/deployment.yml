@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: pet-classifier-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: pet-classifier
@@ -15,6 +15,8 @@ spec:
       containers:
       - name: pet-classifier
         image: ${{ secrets.DOCKER_USERNAME }}/pet-classifier:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
+      imagePullSecrets:
+      - name: docker-hub-secret
