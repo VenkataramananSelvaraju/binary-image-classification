@@ -56,3 +56,7 @@ def log_prediction(input_data, prediction, label=None):
         writer = csv.writer(f)
         # Record the input, result, and optional truth for performance analysis
         writer.writerow([datetime.now(), input_data, prediction, label])
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
