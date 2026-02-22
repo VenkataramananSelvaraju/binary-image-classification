@@ -1,7 +1,14 @@
 from fastapi.testclient import TestClient
 from src.main import app
+import pytest
 
 client = TestClient(app)
+
+@pytest.fixture(autouse=True)
+def mock_model(monkeypatch):
+    from src.model import create_model
+    mock = create_model()
+    monkeypatch.setattr("src.main.model", mock)
 
 def test_health_check():
     response = client.get("/health")
